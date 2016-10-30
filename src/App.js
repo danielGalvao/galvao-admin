@@ -67,7 +67,14 @@ class App extends Component {
                   </thead>
                   <tbody>
                     {
-                      this.state.list
+                      this.state.lista.map(function(autor){
+                        return (
+                          <tr>
+                            <td>{autor.nome}</td>
+                            <td>{autor.email}</td>
+                          </tr>
+                        );
+                      })
                     }
                   </tbody>
                 </table>
