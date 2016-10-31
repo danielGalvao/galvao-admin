@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './css/pure-min.css';
 import './css/side-menu.css';
+import $ from 'jquery';
 
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      lista: [{nome:'galvao',email:'galvaodev@gmail.com',senha:'teste'}]
+      lista: []
     };
+  }
+
+  componentWillMount(){
+    $.ajax({
+      url:"http://localhost:8080/api/autores",
+      dataType: 'json',
+      success:function(resp){
+        console.log(resp);
+        this.setState({lista:resp});
+      }.bind(this)
+    });
   }
 
   render() {
