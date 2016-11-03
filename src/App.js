@@ -3,6 +3,7 @@ import './css/pure-min.css';
 import './css/side-menu.css';
 import $ from 'jquery';
 import InputCustom from './components/InputCustom';
+import BtnSubmitCustom from './components/BtnSubmitCustom';
 
 class App extends Component {
 
@@ -82,10 +83,7 @@ class App extends Component {
                   <InputCustom id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome} label="Nome" />
                   <InputCustom id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail} label="Email" />
                   <InputCustom id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha} label="Senha" />
-                  <div className="pure-control-group">
-                    <label></label>
-                    <button type="submit" className="pure-button pure-button-primary">Gravar</button>
-                  </div>
+                  <BtnSubmitCustom text="Gravar" />
                 </form>
 
               </div>
