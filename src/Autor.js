@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import InputCustom from './components/InputCustom';
 import BtnSubmitCustom from './components/BtnSubmitCustom';
 import $ from 'jquery';
+import PubSub from 'pubsub-js';
+import ErrorHelper from './ErrorHelper';
 
 class AuthorForm extends Component {
   constructor() {
@@ -21,10 +23,16 @@ class AuthorForm extends Component {
      type:'post',
      data: JSON.stringify({nome:this.state.nome,email:this.state.email,senha:this.state.senha}),
      success: function(res){
-       this.props.cbUpdateList(res);
+       PubSub.publish('update-author-list', res);
+       this.setState({nome:'',email:'',senha:''});
      }.bind(this),
      error: function(res){
-       console.log("erro");
+       if(res.status === 400){
+         new ErrorHelper().publishError(res.responseJSON);
+       }
+     },
+     beforeSend: function() {
+       PubSub.publish('cleanError',{});
      }
    });
  }
@@ -69,7 +77,7 @@ class AuthorTable extends Component {
             {
               this.props.lista.map(function(autor) {
                 return (
-                  <tr>
+                  <tr key={autor.email.toString()}>
                     <td>
                       {autor.nome}
                     </td>
@@ -91,7 +99,6 @@ export default class AuthorBox extends Component {
   constructor() {
     super();
     this.state = {lista : []};
-    this.updateList = this.updateList.bind(this);
   }
   componentWillMount(){
     $.ajax({
@@ -101,9 +108,10 @@ export default class AuthorBox extends Component {
         this.setState({lista:resp});
       }.bind(this)
     });
-  }
-  updateList(newList){
-    this.setState({lista:newList});
+
+    PubSub.subscribe('update-author-list', function(msg, newList){
+      this.setState({lista:newList});
+    }.bind(this));
   }
   render() {
     return (
