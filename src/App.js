@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './css/pure-min.css';
 import './css/side-menu.css';
-import AuthorBox from './Autor';
 import {Link} from 'react-router';
 
 class App extends Component {
