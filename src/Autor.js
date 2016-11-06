@@ -77,7 +77,7 @@ class AuthorTable extends Component {
             {
               this.props.lista.map(function(autor) {
                 return (
-                  <tr key={autor.email.toString()}>
+                  <tr key={autor.id}>
                     <td>
                       {autor.nome}
                     </td>
@@ -116,8 +116,13 @@ export default class AuthorBox extends Component {
   render() {
     return (
       <div>
-        <AuthorForm cbUpdateList={this.updateList} />
-        <AuthorTable lista={this.state.lista} />
+        <div className="header">
+            <h1>Cadastro de Autor</h1>
+        </div>
+        <div className="content" id="content">
+          <AuthorForm cbUpdateList={this.updateList} />
+          <AuthorTable lista={this.state.lista} />
+        </div>
       </div>
     );
   }
