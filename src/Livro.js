@@ -10,9 +10,6 @@ class BookForm extends Component {
     super();
     this.state = {titulo:'',preco:'',autorId:''};
     this.enviaForm = this.enviaForm.bind(this);
-    this.setTitulo = this.setTitulo.bind(this);
-    this.setPreco = this.setPreco.bind(this);
-    this.setAutorId = this.setAutorId.bind(this);
   }
   enviaForm(evento){
    evento.preventDefault();
@@ -37,27 +34,22 @@ class BookForm extends Component {
      }
    });
  }
- setTitulo(evento){
-   this.setState({titulo:evento.target.value});
+
+ updateField(inputName, event) {
+  var field = {};
+  field[inputName] = event.target.value;
+  this.setState(field);
  }
-
-  setPreco(evento){
-    this.setState({preco:evento.target.value});
-  }
-
-  setAutorId(evento){
-    this.setState({autorId:evento.target.value});
-  }
 
   render() {
     return (
       <div className="pure-form pure-form-aligned">
         <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm.bind(this)}>
-          <InputCustom id="titulo" type="text" name="titulo" value={this.state.titulo} onChange={this.setTitulo} label="Titulo" />
-          <InputCustom id="preco" type="text" name="preco" value={this.state.preco} onChange={this.setPreco} label="Preço" />
+          <InputCustom id="titulo" type="text" name="titulo" value={this.state.titulo} onChange={this..updateField.bind(this,'titulo')} label="Titulo" />
+          <InputCustom id="preco" type="text" name="preco" value={this.state.preco} onChange={this.updateField.bind(this,'preco')} label="Preço" />
           <div className="pure-control-group">
             <label htmlFor="autorId">Autor</label>
-            <select value={this.state.autorId} name="autorId" onChange={this.setAutorId}>
+            <select value={this.state.autorId} name="autorId" onChange={this.updateField.bind(this,'autorId')}>
               <option value="">Selecione</option>
               {
                 this.props.autores.map(function(autor){
